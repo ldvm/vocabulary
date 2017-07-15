@@ -5,7 +5,7 @@
 @prefix v-timeline-things-things-intervals: <http://linked.opendata.cz/ontology/ldvm/visualizer/timeline-things-things-intervals/> .
 @prefix v-timeline-things-things-intervals-r: <http://linked.opendata.cz/resource/ldvm/visualizer/timeline-things-things-intervals/> .
 
-v-timeline-things-things-intervals-r:TimeLineInstantVisualizerTemplate a ldvm:VisualizerTemplate ;
+v-timeline-things-things-intervals-r:TimeLineVisualizerTemplate a ldvm:VisualizerTemplate ;
     rdfs:label "Time Line Things-Things-Intervals Visualizer"@en;
     rdfs:comment "Visualizes records with records with intervals"@en;
     ldvm:componentConfigurationTemplate v-timeline-things-things-intervals-r:Configuration ;
