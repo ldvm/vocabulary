@@ -1,0 +1,51 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-timeline-things-intervals: <http://linked.opendata.cz/ontology/ldvm/visualizer/timeline-things-intervals/> .
+@prefix v-timeline-things-intervals-r: <http://linked.opendata.cz/resource/ldvm/visualizer/timeline-things-intervals/> .
+
+v-timeline-things-intervals-r:TimeLineVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "Time Line Things-Intervals Visualizer"@en;
+    rdfs:comment "Visualizes records that have intervals connected to them"@en;
+    ldvm:componentConfigurationTemplate v-timeline-things-intervals-r:Configuration ;
+    ldvm:inputTemplate v-timeline-things-intervals-r:Input ;
+    ldvm:feature v-timeline-things-intervals-r:TimelineFeature ;
+    .
+
+v-timeline-things-intervals:TimelineVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "Timeline Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-timeline-things-intervals-r:Configuration a v-timeline-things-intervals:TimelineVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-timeline-things-intervals-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Time data described using RGML vocabulary" ;
+    .
+
+v-timeline-things-intervals-r:TimelineFeature a ldvm:MandatoryFeature ;
+    dcterms:title "The actual timeline data" ;
+    ldvm:descriptor v-timeline-things-intervals-r:TimelineDescriptor ;
+    .
+
+v-timeline-things-intervals-r:TimelineDescriptor a ldvm:Descriptor ;
+    dcterms:title "Timeline data presence check" ;
+    ldvm:query """
+        PREFIX time: <http://www.w3.org/2006/time#>
+
+		ASK {
+  			?thing ?hasTemporalAbstraction ?interval .
+  
+  			?interval time:hasBeginning ?beginning ;
+    			time:hasEnd ?end .
+	
+  			?beginning time:inDateTime ?dateTimeDescriptionBeginning .
+  
+  			?end time:inDateTime ?dateTimeDescriptionEnd .
+		}
+    """ ;
+    ldvm:appliesTo v-timeline-things-intervals-r:Input ;
+    .

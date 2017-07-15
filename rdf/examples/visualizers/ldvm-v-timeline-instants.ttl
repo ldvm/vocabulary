@@ -1,0 +1,44 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-timeline-instants: <http://linked.opendata.cz/ontology/ldvm/visualizer/timeline-instants/> .
+@prefix v-timeline-instants-r: <http://linked.opendata.cz/resource/ldvm/visualizer/timeline-instants/> .
+
+v-timeline-instants-r:TimeLineVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "TimeLine Instants visualizer"@en;
+    rdfs:comment "Visualizes records with date"@en;
+    ldvm:componentConfigurationTemplate v-timeline-instants-r:Configuration ;
+    ldvm:inputTemplate v-timeline-instants-r:Input ;
+    ldvm:feature v-timeline-instants-r:TimelineFeature ;
+    .
+
+v-timeline-instants:TimelineVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "TimeLine Instants Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-timeline-instants-r:Configuration a v-timeline-instants:TimelineVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-timeline-instants-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Time data described using RGML vocabulary" ;
+    .
+
+v-timeline-instants-r:TimelineFeature a ldvm:MandatoryFeature ;
+    dcterms:title "TimeLine input descriptor" ;
+    ldvm:descriptor v-timeline-instants-r:TimelineDescriptor ;
+    .
+
+v-timeline-instants-r:TimelineDescriptor a ldvm:Descriptor ;
+    dcterms:title "Timeline instants presence check" ;
+    ldvm:query """
+        PREFIX time: <http://www.w3.org/2006/time#>
+
+		ASK {
+  			?instant time:inDateTime ?time .
+		}
+    """ ;
+    ldvm:appliesTo v-timeline-instants-r:Input ;
+    .

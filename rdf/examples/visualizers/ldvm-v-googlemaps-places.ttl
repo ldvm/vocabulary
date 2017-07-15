@@ -1,0 +1,47 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-googlemaps-places: <http://linked.opendata.cz/ontology/ldvm/visualizer/googlemaps-places/> .
+@prefix v-googlemaps-places-r: <http://linked.opendata.cz/resource/ldvm/visualizer/googlemaps-places/> .
+
+v-googlemaps-places-r:GoogleMapsVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "GoogleMaps places visualizer"@en;
+    rdfs:comment "Visualizes places with coordinates"@en;
+    ldvm:componentConfigurationTemplate v-googlemaps-places-r:Configuration ;
+    ldvm:inputTemplate v-googlemaps-places-r:Input ;
+    ldvm:feature v-googlemaps-places-r:GoogleMapsFeature ;
+    .
+
+v-googlemaps-places:GoogleMapsVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "Google Maps places Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-googlemaps-places-r:Configuration a v-googlemaps-places:GoogleMapsVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-googlemaps-places-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Data described using RGML vocabulary" ;
+    .
+
+v-googlemaps-places-r:GoogleMapsFeature a ldvm:MandatoryFeature ;
+    dcterms:title "GoogleMaps input descriptor" ;
+    ldvm:descriptor v-googlemaps-places-r:GoogleMapsDescriptor ;
+    .
+
+v-googlemaps-places-r:GoogleMapsDescriptor a ldvm:Descriptor ;
+    dcterms:title "GoogleMaps places presence check" ;
+    ldvm:query """
+        PREFIX s: <http://schema.org/>
+
+		ASK {
+  			?place s:geo ?geocoordinates .
+  
+  			?geocoordinates s:longitude ?longitude ;
+    			s:latitude ?latitude .
+
+    """ ;
+    ldvm:appliesTo v-googlemaps-places-r:Input ;
+    .

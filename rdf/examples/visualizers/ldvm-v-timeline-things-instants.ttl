@@ -1,0 +1,46 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-timeline-things-instants: <http://linked.opendata.cz/ontology/ldvm/visualizer/timeline-things-instants/> .
+@prefix v-timeline-things-instants-r: <http://linked.opendata.cz/resource/ldvm/visualizer/timeline-things-instants/> .
+
+v-timeline-things-instants-r:TimeLineVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "Time Line Things-Instants Visualizer"@en;
+    rdfs:comment "Visualizes records that have time data connected to them"@en;
+    ldvm:componentConfigurationTemplate v-timeline-things-instants-r:Configuration ;
+    ldvm:inputTemplate v-timeline-things-instants-r:Input ;
+    ldvm:feature v-timeline-things-instants-r:TimelineFeature ;
+    .
+
+v-timeline-things-instants:TimelineVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "Timeline Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-timeline-things-instants-r:Configuration a v-timeline-things-instants:TimelineVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-timeline-things-instants-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Time data described using RGML vocabulary" ;
+    .
+
+v-timeline-things-instants-r:TimelineFeature a ldvm:MandatoryFeature ;
+    dcterms:title "The actual timeline data" ;
+    ldvm:descriptor v-timeline-things-instants-r:TimelineDescriptor ;
+    .
+
+v-timeline-things-instants-r:TimelineDescriptor a ldvm:Descriptor ;
+    dcterms:title "Timeline data presence check" ;
+    ldvm:query """
+        PREFIX time: <http://www.w3.org/2006/time#>
+
+		ASK {
+			?thing ?hasTemporalAbstraction ?instant .
+
+  			?instant time:inDateTime ?time .
+		}
+    """ ;
+    ldvm:appliesTo v-timeline-things-instants-r:Input ;
+    .
