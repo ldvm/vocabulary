@@ -41,7 +41,7 @@ v-googlemaps-places-r:GoogleMapsDescriptor a ldvm:Descriptor ;
   
   			?geocoordinates s:longitude ?longitude ;
     			s:latitude ?latitude .
-
+		}
     """ ;
     ldvm:appliesTo v-googlemaps-places-r:Input ;
     .
