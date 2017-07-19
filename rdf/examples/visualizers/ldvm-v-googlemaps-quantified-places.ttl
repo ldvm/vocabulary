@@ -6,7 +6,7 @@
 @prefix v-googlemaps-quantified-places-r: <http://linked.opendata.cz/resource/ldvm/visualizer/googlemaps-quantified-places/> .
 
 v-googlemaps-quantified-places-r:GoogleMapsVisualizerTemplate a ldvm:VisualizerTemplate ;
-    rdfs:label "GoogleMaps quantified places values visualizer"@en;
+    rdfs:label "GoogleMaps quantified places visualizer"@en;
     rdfs:comment "Visualizes places with values and coordinates"@en;
     ldvm:componentConfigurationTemplate v-googlemaps-quantified-places-r:Configuration ;
     ldvm:inputTemplate v-googlemaps-quantified-places-r:Input ;
