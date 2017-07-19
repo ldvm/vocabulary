@@ -6,8 +6,8 @@
 @prefix v-googlemaps-quantified-things-r: <http://linked.opendata.cz/resource/ldvm/visualizer/googlemaps-quantified-things/> .
 
 v-googlemaps-quantified-things-r:GoogleMapsVisualizerTemplate a ldvm:VisualizerTemplate ;
-    rdfs:label "GoogleMaps quantified things with places visualizer"@en;
-    rdfs:comment "Visualizes things with values and places"@en;
+    rdfs:label "GoogleMaps quantified things visualizer"@en;
+    rdfs:comment "Visualizes things with quantifiers and places"@en;
     ldvm:componentConfigurationTemplate v-googlemaps-quantified-things-r:Configuration ;
     ldvm:inputTemplate v-googlemaps-quantified-things-r:Input ;
     ldvm:feature v-googlemaps-quantified-things-r:GoogleMapsFeature ;
