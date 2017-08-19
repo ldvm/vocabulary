@@ -1,0 +1,45 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-googlemaps-coordinates: <http://linked.opendata.cz/ontology/ldvm/visualizer/googlemaps-coordinates/> .
+@prefix v-googlemaps-coordinates-r: <http://linked.opendata.cz/resource/ldvm/visualizer/googlemaps-coordinates/> .
+
+v-googlemaps-coordinates-r:GoogleMapsVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "GoogleMaps coordinates visualizer"@en;
+    rdfs:comment "Visualizes coordinates"@en;
+    ldvm:componentConfigurationTemplate v-googlemaps-coordinates-r:Configuration ;
+    ldvm:inputTemplate v-googlemaps-coordinates-r:Input ;
+    ldvm:feature v-googlemaps-coordinates-r:GoogleMapsFeature ;
+    .
+
+v-googlemaps-coordinates:GoogleMapsVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "Google Maps coordinates Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-googlemaps-coordinates-r:Configuration a v-googlemaps-coordinates:GoogleMapsVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-googlemaps-coordinates-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Data described using RGML vocabulary" ;
+    .
+
+v-googlemaps-coordinates-r:GoogleMapsFeature a ldvm:MandatoryFeature ;
+    dcterms:title "GoogleMaps input descriptor" ;
+    ldvm:descriptor v-googlemaps-coordinates-r:GoogleMapsDescriptor ;
+    .
+
+v-googlemaps-coordinates-r:GoogleMapsDescriptor a ldvm:Descriptor ;
+    dcterms:title "GoogleMaps coordinates presence check" ;
+    ldvm:query """
+        PREFIX s: <http://schema.org/>
+
+		ASK {
+  			?geocoordinates s:longitude ?longitude ;
+    			s:latitude ?latitude .
+		}
+    """ ;
+    ldvm:appliesTo v-googlemaps-coordinates-r:Input ;
+    .

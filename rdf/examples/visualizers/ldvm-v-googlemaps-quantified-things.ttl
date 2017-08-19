@@ -1,0 +1,52 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-googlemaps-quantified-things: <http://linked.opendata.cz/ontology/ldvm/visualizer/googlemaps-quantified-things/> .
+@prefix v-googlemaps-quantified-things-r: <http://linked.opendata.cz/resource/ldvm/visualizer/googlemaps-quantified-things/> .
+
+v-googlemaps-quantified-things-r:GoogleMapsVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "GoogleMaps quantified things visualizer"@en;
+    rdfs:comment "Visualizes things with quantifiers and places"@en;
+    ldvm:componentConfigurationTemplate v-googlemaps-quantified-things-r:Configuration ;
+    ldvm:inputTemplate v-googlemaps-quantified-things-r:Input ;
+    ldvm:feature v-googlemaps-quantified-things-r:GoogleMapsFeature ;
+    .
+
+v-googlemaps-quantified-things:GoogleMapsVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "Google Maps quantified things with places Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-googlemaps-quantified-things-r:Configuration a v-googlemaps-quantified-things:GoogleMapsVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-googlemaps-quantified-things-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Data described using RGML vocabulary" ;
+    .
+
+v-googlemaps-quantified-things-r:GoogleMapsFeature a ldvm:MandatoryFeature ;
+    dcterms:title "GoogleMaps input descriptor" ;
+    ldvm:descriptor v-googlemaps-quantified-things-r:GoogleMapsDescriptor ;
+    .
+
+v-googlemaps-quantified-things-r:GoogleMapsDescriptor a ldvm:Descriptor ;
+    dcterms:title "GoogleMaps quantified things with places presence check" ;
+    ldvm:query """
+        PREFIX s: <http://schema.org/>
+
+		ASK {
+  			?thing ?hasSpatialAbstraction ?spatialAbstraction ;
+    			?hasQuantifiedAbstraction ?quantifiedAbstraction .
+  
+  			?spatialAbstraction s:geo ?geocoordinates .
+  
+  			?geocoordinates s:longitude ?longitude ;
+    			s:latitude ?latitude .
+	
+  			FILTER(ISNUMERIC(?quantifiedAbstraction))
+		}
+    """ ;
+    ldvm:appliesTo v-googlemaps-quantified-things-r:Input ;
+    .

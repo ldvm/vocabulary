@@ -1,0 +1,49 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ldvm: <http://linked.opendata.cz/ontology/ldvm/> .
+
+@prefix v-timeline-intervals: <http://linked.opendata.cz/ontology/ldvm/visualizer/timeline-intervals/> .
+@prefix v-timeline-intervals-r: <http://linked.opendata.cz/resource/ldvm/visualizer/timeline-intervals/> .
+
+v-timeline-intervals-r:TimeLineVisualizerTemplate a ldvm:VisualizerTemplate ;
+    rdfs:label "TimeLine Intervals visualizer"@en;
+    rdfs:comment "Visualizes records with start and end"@en;
+    ldvm:componentConfigurationTemplate v-timeline-intervals-r:Configuration ;
+    ldvm:inputTemplate v-timeline-intervals-r:Input ;
+    ldvm:feature v-timeline-intervals-r:TimelineFeature ;
+    .
+
+v-timeline-intervals:TimelineVisualizerConfiguration a rdfs:Class ;
+    rdfs:label "TimeLine Intervals Visualizer Configuration"@en;
+    rdfs:subClassOf ldvm:ComponentConfiguration ;
+    .
+
+v-timeline-intervals-r:Configuration a v-timeline-intervals:TimelineVisualizerConfiguration ;
+    dcterms:title "Default Configuration" ;
+    .
+
+v-timeline-intervals-r:Input a ldvm:InputDataPortTemplate ;
+    dcterms:title "Time data described using RGML vocabulary" ;
+    .
+
+v-timeline-intervals-r:TimelineFeature a ldvm:MandatoryFeature ;
+    dcterms:title "TimeLine input descriptor" ;
+    ldvm:descriptor v-timeline-intervals-r:TimelineDescriptor ;
+    .
+
+v-timeline-intervals-r:TimelineDescriptor a ldvm:Descriptor ;
+    dcterms:title "Timeline intervals presence check" ;
+    ldvm:query """
+        PREFIX time: <http://www.w3.org/2006/time#>
+
+		ASK {
+  			?interval time:hasBeginning ?beginning ;
+    			time:hasEnd ?end .
+	
+  			?beginning time:inDateTime ?dateTimeDescriptionBeginning .
+  
+  			?end time:inDateTime ?dateTimeDescriptionEnd .
+		}
+    """ ;
+    ldvm:appliesTo v-timeline-intervals-r:Input ;
+    .
